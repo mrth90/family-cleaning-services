@@ -21,12 +21,9 @@ import {
 import { motion } from "framer-motion";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
 import heroImage from "./assets/cleaning-hero.png";
-import {
-  type ContactRequest,
-  submitContactRequest,
-} from "./services/contactService";
+import logoImage from "./assets/family-cleaning-logo.jpeg";
+import { ContactForm } from "./components/ContactForm";
 
 const navItems = [
   ["Home", "#home"],
@@ -121,13 +118,7 @@ const testimonials = [
 function Logo() {
   return (
     <a href="#home" className="logo-mark" aria-label="Family Cleaning Services home">
-      <span className="logo-icon" aria-hidden="true">
-        <Sparkles size={22} />
-      </span>
-      <span>
-        <strong>Family</strong>
-        <small>Cleaning Services</small>
-      </span>
+      <img src={logoImage} alt="Family Cleaning Services" />
     </a>
   );
 }
@@ -147,126 +138,6 @@ function SectionHeading({
       <h2>{title}</h2>
       {copy ? <p>{copy}</p> : null}
     </div>
-  );
-}
-
-function ContactForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<ContactRequest>({
-    defaultValues: {
-      serviceType: "",
-      propertySize: "",
-    },
-  });
-
-  const onSubmit = async (data: ContactRequest) => {
-    await submitContactRequest(data);
-  };
-
-  const fieldClass = (hasError: boolean) =>
-    `form-field ${hasError ? "form-field-error" : ""}`;
-
-  return (
-    <form className="contact-form" onSubmit={handleSubmit(onSubmit)} noValidate>
-      <div className="form-grid">
-        <label>
-          Full Name
-          <input
-            className={fieldClass(Boolean(errors.name))}
-            autoComplete="name"
-            {...register("name", { required: "Full name is required." })}
-          />
-          {errors.name ? <small>{errors.name.message}</small> : null}
-        </label>
-
-        <label>
-          Email
-          <input
-            className={fieldClass(Boolean(errors.email))}
-            type="email"
-            autoComplete="email"
-            {...register("email", {
-              required: "Email is required.",
-              pattern: {
-                value: /^\S+@\S+\.\S+$/,
-                message: "Enter a valid email address.",
-              },
-            })}
-          />
-          {errors.email ? <small>{errors.email.message}</small> : null}
-        </label>
-
-        <label>
-          Phone Number
-          <input
-            className={fieldClass(Boolean(errors.phone))}
-            type="tel"
-            autoComplete="tel"
-            {...register("phone", { required: "Phone number is required." })}
-          />
-          {errors.phone ? <small>{errors.phone.message}</small> : null}
-        </label>
-
-        <label>
-          Service Type
-          <select
-            className={fieldClass(Boolean(errors.serviceType))}
-            {...register("serviceType", { required: "Select a service type." })}
-          >
-            <option value="">Select service</option>
-            <option>Residential Cleaning</option>
-            <option>Commercial Cleaning</option>
-            <option>Deep Cleaning</option>
-            <option>Move In / Move Out Cleaning</option>
-          </select>
-          {errors.serviceType ? <small>{errors.serviceType.message}</small> : null}
-        </label>
-
-        <label>
-          Property Size
-          <input
-            className={fieldClass(Boolean(errors.propertySize))}
-            placeholder="Example: 3 bedrooms, 2 baths"
-            {...register("propertySize", {
-              required: "Property size is required.",
-            })}
-          />
-          {errors.propertySize ? <small>{errors.propertySize.message}</small> : null}
-        </label>
-
-        <label>
-          Preferred Date
-          <input
-            className={fieldClass(Boolean(errors.preferredDate))}
-            type="date"
-            {...register("preferredDate", {
-              required: "Preferred date is required.",
-            })}
-          />
-          {errors.preferredDate ? (
-            <small>{errors.preferredDate.message}</small>
-          ) : null}
-        </label>
-      </div>
-
-      <label>
-        Message
-        <textarea
-          className={fieldClass(Boolean(errors.message))}
-          rows={5}
-          {...register("message", { required: "Message is required." })}
-        />
-        {errors.message ? <small>{errors.message.message}</small> : null}
-      </label>
-
-      <button className="button button-primary form-submit" disabled={isSubmitting}>
-        Request Your Free Quote
-        <ArrowRight size={18} />
-      </button>
-    </form>
   );
 }
 

@@ -17,6 +17,7 @@
   --muted: #5d6b7e;
   --line: #d9e4ef;
   --white: #ffffff;
+  --logo-bg: #f7f7f7;
   --shadow: 0 24px 70px rgba(10, 79, 122, 0.14);
 }
 
@@ -70,7 +71,7 @@ img {
   top: 0;
   z-index: 50;
   border-bottom: 1px solid rgba(217, 228, 239, 0.85);
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(247, 247, 247, 0.94);
   backdrop-filter: blur(16px);
 }
 
@@ -88,41 +89,14 @@ img {
 .logo-mark {
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
-  min-width: max-content;
+  flex: 0 0 auto;
 }
 
-.logo-icon {
-  display: grid;
-  width: 46px;
-  height: 46px;
-  place-items: center;
-  border-radius: 14px;
-  color: var(--white);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 42%),
-    linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-  box-shadow: 0 12px 28px rgba(28, 117, 188, 0.28);
-}
-
-.logo-mark strong,
-.logo-mark small {
-  display: block;
-  letter-spacing: 0;
-}
-
-.logo-mark strong {
-  color: var(--secondary-blue);
-  font-size: 1rem;
-  line-height: 1;
-}
-
-.logo-mark small {
-  color: var(--primary-orange);
-  font-size: 0.76rem;
-  font-weight: 800;
-  line-height: 1.2;
-  text-transform: uppercase;
+.logo-mark img {
+  width: clamp(150px, 24vw, 230px);
+  height: auto;
+  max-height: 62px;
+  object-fit: contain;
 }
 
 .mobile-menu-button {
@@ -648,6 +622,26 @@ textarea.form-field {
   font-weight: 800;
 }
 
+.form-alert {
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.form-alert-success {
+  border: 1px solid #9bd8b4;
+  color: #166534;
+  background: #effaf3;
+}
+
+.form-alert-error {
+  border: 1px solid #f2afa8;
+  color: #b42318;
+  background: #fff4f2;
+}
+
 .form-submit {
   width: 100%;
 }
@@ -655,6 +649,16 @@ textarea.form-field {
 .form-submit:disabled {
   cursor: wait;
   opacity: 0.75;
+}
+
+.spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .footer {
@@ -665,7 +669,7 @@ textarea.form-field {
   justify-content: space-between;
   padding: 2rem 1.1rem;
   border-top: 1px solid var(--line);
-  background: var(--white);
+  background: var(--logo-bg);
   color: var(--muted);
   text-align: center;
 }
@@ -739,6 +743,11 @@ textarea.form-field {
 }
 
 @media (max-width: 520px) {
+  .logo-mark img {
+    width: 142px;
+    max-height: 54px;
+  }
+
   .hero {
     min-height: 720px;
   }
